@@ -84,8 +84,12 @@ static void opt_help(string const &arg)
 
 int main(int argc, char * const argv[])
 {
+	Array sensor[];
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
+	
+	void readData(istream*,Array);
+	void querryData(Array,ostream*);
 }
 

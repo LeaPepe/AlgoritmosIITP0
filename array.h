@@ -1,20 +1,27 @@
 #include <iostream>
-//clase
+//plantilla de Array
 template<classT>
 class Array{
 	T* p; //puntero a vector
 	int size; // tamano
 public:
-	array(int s = 10); // constructor vacio
+	array(); // constructor vacio
+	array(int); // constructor de tamano definido
 	array(const array<T>&); //constructor copia
 	~array(); //destructor
-	int getSize()const; // preguntar tamano
-	int& operator[](int); //operador de vector
+	int getSize() const; // preguntar tamano
+	T& operator[](int); //operador de vector
 	bool operator==(const Array<T>&)const; // operador booleano == 
-	Array<T>& Array<T>::operator=(const Array<T>&) // operador asignacion
+	Array<T>& operator=(const Array<T>&) // operador asignacion
+	void enlarge(int size = 10);
 };
 
 //constructores
+template<classT>
+Array<T>::Array(){
+	size=10;
+	p = new T[size];
+}
 template<classT>
 Array<T>::Array(int s){
 	size=s;
@@ -30,7 +37,7 @@ Array<T>::Array(const Array<T>& arr){
 //destructor
 template<classT>
 Array<T>::~Array(){
-	if(p =/ NULL){
+	if(p != NULL){
 		delete []p;
 	}
 }
@@ -43,9 +50,9 @@ int Array<T>::getSize(){
 template<classT>
 Array<T>& Array<T>::operator=(const Array<T>& arr){
 	if(this != &arr){
-		if(size/=arr.size){
+		if(size != arr.size){
 			T* aux;
-			aux = new T[r.size];
+			aux = new T[arr.size];
 			delete[]p;
 			size = r.size;
 			p=aux;
@@ -61,7 +68,7 @@ template<classT>
 bool Array<T>::operator==(const Array<T>& arr){
 	if(arr.getSize() == size){
 		for(int i=0;int<size;i++){
-			if(arr.p[i] /= p[i]){
+			if(arr.p[i] != p[i]){
 				return false;
 			}
 		}
@@ -79,3 +86,17 @@ int& Array<T>::operator[](int pos){
 		return p[pos];
 	}
 }
+//agrandar vector
+void enlarge(int s = 10){
+	int newSize = size+s;
+	T* aux;
+	aux = new T[newSize];
+	for(i=0;i<size;i++){
+		aux[i] = p[i];
+	}
+	delete[] p;
+	size = newSize;
+	p = aux;
+	
+}
+

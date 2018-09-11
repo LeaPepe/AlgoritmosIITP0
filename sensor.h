@@ -4,7 +4,7 @@
 #include <iostream>
 
 class sensor {
-	int samples;
+	int size;
 	string ID;
 	array temperature;
 public:
@@ -13,12 +13,14 @@ public:
 	~sensor();
 	void setID(string);
 	void addTemp(int);
-	int& getTemp(int)const;
+	int getTemp(int)const;
+	
+	int getSize() const;
 	string getID()const;
-	int getMax(int const &,int const &)const;
-	int getMin(int const &,int const &)const;
-	int getAvg(int const &,int const &)const;
-	Array getQuerry(int const &,int const &)const; //devuelve avg,min,max,cantidad de muestras
+	int getMax(int,int)const;
+	int getMin(int,int)const;
+	int getAvg(int,int)const;
+	int getCount(int,int)const;
 };
 
 #endif

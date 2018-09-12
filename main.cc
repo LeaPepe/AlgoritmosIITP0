@@ -1,18 +1,5 @@
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <cstdlib>
-#include <cmdline.h>
-#include <array.h>
-#include <sensor.h>
-
-//GATO con botas
+#include <main.h>
 using namespace std;
-
-static void opt_input(string const &);
-static void opt_output(string const &);
-static void opt_data(string const &);
 
 static istream *iss = 0;	// Input Stream 
 static ostream *oss = 0;	// Output Stream

@@ -13,6 +13,7 @@ static istream *iss = 0;	// Input Stream
 static ostream *oss = 0;	// Output Stream
 static fstream ifs; 		// Input File Stream
 static fstream ofs;		// Output File Stream
+static fstream idfs;	// Input data stream
 
 static option_t options[] = {
 	{1, "d", "data", NULL, opt_data, OPT_MANDATORY},
@@ -39,7 +40,26 @@ static void opt_input(string const &arg){
 	// Verificamos que el stream este OK.
 	//
 	if (!iss->good()) {
-		cerr << "cannot open "
+		cerr << "cannot open querry input"
+		     << arg
+		     << "."
+		     << endl;
+		exit(1);
+	}
+}
+
+static void opt_data(string const &arg){
+	// Si el nombre del archivos es "-", usaremos la entrada
+	// estándar. De lo contrario, abrimos un archivo en modo
+	// de lectura.
+	//
+	idfs.open(arg.c_str(), ios::in); // c_str(): Returns a pointer to an array that contains a null-terminated
+										// sequence of characters (i.e., a C-string) representing
+										// the current value of the string object.
+	// Verificamos que el stream este OK.
+	//
+	if (!idfs->good()) {
+		cerr << "cannot open data input"
 		     << arg
 		     << "."
 		     << endl;
@@ -63,7 +83,7 @@ static void opt_output(string const &arg)
 	// Verificamos que el stream este OK.
 	//
 	if (!oss->good()) {
-		cerr << "cannot open "
+		cerr << "cannot open output file"
 		     << arg
 		     << "."
 		     << endl;
@@ -78,14 +98,23 @@ static void opt_help(string const &arg)
 	exit(0);
 }
 
+// ---- main ---- //
 int main(int argc, char * const argv[])
 {
-	Array sensor[];
+	Array sensores;
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	
-	void readData(istream*,Array);
-	void querryData(Array,ostream*);
+	//ahora se puede trabajar con iss y oss indistintamente si es archivo o teclado/pantalla
+	void readData(idfs,sensores);
+	void querryData(iss,sensores,oss);
+}
+
+void readData(fstream &file, Array& sensores){
+	cout << "la funcion readData anda bien";
+}
+
+void querryData(istream& input, Array& sensores,ostream& output){
+	cout << "la funcion querryData anda bien";
 }
 

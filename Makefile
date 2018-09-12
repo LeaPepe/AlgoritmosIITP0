@@ -3,19 +3,23 @@ CXXFLAGS = -I. $(CXXARGS)
 LDFLAGS  =
 CXX      = c++
 
-all: test1
+all: main
 	@/bin/true
 
-test1: test1.o complejo.o
-	$(CXX) $(LDFLAGS) -o test1 test1.o complejo.o
+main: main.o sensor.o
+	$(CXX) $(LDFLAGS) -o main sensor.o main.o cmdline.o
 
-test1.o: test1.cc complejo.h
-	$(CXX) $(CXXFLAGS) -c test1.cc
+main.o: main.h array.h cmdline.h sensor.h
+	$(CXX) $(CXXFLAGS) -c main.cc
 
-complejo.o: complejo.cc complejo.h
-	$(CXX) $(CXXFLAGS) -c complejo.cc
+sensor.o: sensor.cc sensor.h
+	$(CXX) $(CXXFLAGS) -c sensor.cc
 
-test: test1
+
+cmdline.o: cmdline.cc cmdline.h
+	$(CXX) $(CXXFLAGS) -c cmdline.cc
+
+test: main
 	@set -e; for t in test?; do              \
 	  echo testing: $$t.;                    \
 	  ./$$t <$$t.in >$$t.t;                  \
@@ -23,7 +27,7 @@ test: test1
 	done
 	@echo test ok.
 
-test-valgrind: test1
+test-valgrind: main
 	@set -e; for t in test?; do                                  \
 	  echo testing: $$t.;                                        \
 	  valgrind --tool=memcheck ./$$t <$$t.in >$$t.t 2>/dev/null; \

@@ -6,17 +6,17 @@
 sensor::sensor(){
 	this->ID = "sensor";
 	this->size = 0;
-	this->temp = New array();
+	this->temp = New Array <int> ();
 }
 sensor::sensor(char* name){
 	this->ID = name;
 	this->size = 0;
-	this->temp = New array();
+	this->temp = New Array();
 }
 sensor::sensor(const sensor& s){
 	ID = s.getID();
 	size = s.getSize();
-	temp = New array(s.temp);
+	temp = New Array(s.temp);
 }
 //destructor
 sensor::~sensor(){

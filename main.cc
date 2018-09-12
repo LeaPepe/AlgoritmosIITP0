@@ -18,8 +18,9 @@ static fstream idfs;	// Input data stream
 static option_t options[] = {
 	{1, "d", "data", NULL, opt_data, OPT_MANDATORY},
 	{1, "i", "input", "-", opt_input, OPT_DEFAULT},
-	{1, "o", "output", "-", opt_output, OPT_DEFAULT}
+	{1, "o", "output", "-", opt_output, OPT_DEFAULT},
 	{0, "h", "help", NULL, opt_help, OPT_DEFAULT},
+	{0, },
 };
 
 static void opt_input(string const &arg){
@@ -58,7 +59,7 @@ static void opt_data(string const &arg){
 										// the current value of the string object.
 	// Verificamos que el stream este OK.
 	//
-	if (!idfs->good()) {
+	if (!idfs.good()) {
 		cerr << "cannot open data input"
 		     << arg
 		     << "."
@@ -67,8 +68,7 @@ static void opt_data(string const &arg){
 	}
 }
 
-static void opt_output(string const &arg)
-{
+static void opt_output(string const &arg){
 	// Si el nombre del archivos es "-", usaremos la salida
 	// estándar. De lo contrario, abrimos un archivo en modo
 	// de escritura.
@@ -91,30 +91,33 @@ static void opt_output(string const &arg)
 	}
 }
 
-static void opt_help(string const &arg)
-{
+static void opt_help(string const &arg){
+
 	cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)"
 	     << endl;
 	exit(0);
 }
 
+
+
+void readData(fstream& file, Array <int> & sensores){
+	cout << "la funcion readData anda bien";
+}
+
+void querryData(istream& input, Array <int> & sensores,ostream& output){
+	cout << "la funcion querryData anda bien";
+}
+
+
 // ---- main ---- //
 int main(int argc, char * const argv[])
 {
-	Array sensores;
+	Array <int> sensores;
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 	//ahora se puede trabajar con iss y oss indistintamente si es archivo o teclado/pantalla
-	void readData(idfs,sensores);
-	void querryData(iss,sensores,oss);
-}
-
-void readData(fstream &file, Array& sensores){
-	cout << "la funcion readData anda bien";
-}
-
-void querryData(istream& input, Array& sensores,ostream& output){
-	cout << "la funcion querryData anda bien";
+	readData(idfs,sensores);
+	querryData(iss,sensores,oss);
 }
 

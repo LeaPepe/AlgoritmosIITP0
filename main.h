@@ -12,4 +12,3 @@ using namespace std;
 static void opt_input(string const &);
 static void opt_output(string const &);
 static void opt_data(string const &);
-

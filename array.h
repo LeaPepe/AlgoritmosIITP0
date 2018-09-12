@@ -1,3 +1,5 @@
+#ifndef _ARRAY_TEMPLATE_H_INCLUDED_
+#define _ARRAY_TEMPLATE_H_INCLUDED_
 //probando
 #include <iostream>
 //plantilla de Array
@@ -101,3 +103,4 @@ void enlarge(int s = 10){
 	
 }
 
+#endif

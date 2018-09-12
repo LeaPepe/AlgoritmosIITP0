@@ -1,3 +1,11 @@
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <cstdlib>
+#include <cmdline.h>
+#include <array.h>
+#include <sensor.h>
 #include <main.h>
 using namespace std;
 

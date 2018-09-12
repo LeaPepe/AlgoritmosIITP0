@@ -7,6 +7,7 @@ class sensor {
 	int size;
 	string ID;
 	array temperature;
+//Lean capo
 public:
 	sensor();
 	sensor(char*);

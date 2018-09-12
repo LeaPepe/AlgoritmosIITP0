@@ -7,6 +7,7 @@
 #include <array.h>
 #include <sensor.h>
 
+//GATO con botas
 using namespace std;
 
 static void opt_input(string const &);

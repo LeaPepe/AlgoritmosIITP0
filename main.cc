@@ -106,12 +106,20 @@ static void opt_help(string const &arg){
 void readData(istream* input, Array <Sensor> & sensores){
 	cout << "la funcion readData anda bien"<<endl;
 	char ch;
-	while(ch<<input != endl){
-		
-		while(ch<<input != ','){
-			
+	string name;
+	int count = 0;
+	//parseo de nombres
+	while(input >> ch != endl){		//mientras no haya salto de linea
+		sensores.enlarge(1);		// agradndar vector
+		while(ch != ','){			//mientras no sea coma
+			name = name+ch;			//alargar nombre
+			input >> ch;			//siguiente caracter
 		}
+		sensores[count].setID(name);//setear nombre
+		name.clear();				//borrar string
+		count++;
 	}
+	//parseo de numeros despues de primer salto de lineas
 }
 
 void querryData(istream* input, Array <Sensor> & sensores,ostream* output){

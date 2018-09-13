@@ -3,14 +3,16 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+#include <string>
 #include <cmdline.h>
 #include <array.h>
 #include <sensor.h>
 #include <main.h>
 using namespace std;
 
-static istream *iss = 0;	// Input Stream 
-static ostream *oss = 0;	// Output Stream
+static istream *iss = NULL;	// Input Stream 
+static ostream *oss = NULL;	// Output Stream
+static istream *idss = NULL;
 static fstream ifs; 		// Input File Stream
 static fstream ofs;		// Output File Stream
 static fstream idfs;	// Input data stream
@@ -45,7 +47,7 @@ static void opt_input(string const &arg){
 		     << arg
 		     << "."
 		     << endl;
-		exit(1);
+		exit(2);
 	}
 }
 
@@ -57,9 +59,10 @@ static void opt_data(string const &arg){
 	idfs.open(arg.c_str(), ios::in); // c_str(): Returns a pointer to an array that contains a null-terminated
 										// sequence of characters (i.e., a C-string) representing
 										// the current value of the string object.
+	idss = &idfs;
 	// Verificamos que el stream este OK.
 	//
-	if (!idfs.good()) {
+	if (!idss->good()) {
 		cerr << "cannot open data input"
 		     << arg
 		     << "."
@@ -100,24 +103,31 @@ static void opt_help(string const &arg){
 
 
 
-void readData(fstream& file, Array <int> & sensores){
-	cout << "la funcion readData anda bien";
+void readData(istream* input, Array <Sensor> & sensores){
+	cout << "la funcion readData anda bien"<<endl;
+	char ch;
+	while(ch<<input != endl){
+		
+		while(ch<<input != ','){
+			
+		}
+	}
 }
 
-void querryData(istream& input, Array <int> & sensores,ostream& output){
-	cout << "la funcion querryData anda bien";
+void querryData(istream* input, Array <Sensor> & sensores,ostream* output){
+	cout << "la funcion querryData anda bien"<<endl;
 }
 
 
 // ---- main ---- //
 int main(int argc, char * const argv[])
 {
-	Array <int> sensores;
+	Array <Sensor> sensores;
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	//ahora se puede trabajar con iss y oss indistintamente si es archivo o teclado/pantalla
-	readData(idfs,sensores);
+	// ahora puedo trabajar con con flujos iss idss oss
+	readData(idss,sensores);
 	querryData(iss,sensores,oss);
 }
 

@@ -1,26 +1,32 @@
 #ifndef _SENSOR_H_INCLUDED_
 #define _SENSOR_H_INCLUDED_
 
+#include <cstdlib>
 #include <iostream>
+#include <string>
+#include <array.h>
 
-class sensor {
+using namespace std;
+
+class Sensor {
 	int size;
 	string ID;
-	Array <int> temperature;
+	Array<float> temp;
 
 public:
-	sensor();
-	sensor(char*);
-	~sensor();
+	Sensor();
+	Sensor(string);
+	Sensor(const Sensor&);
+	~Sensor();
 	void setID(string);
-	void addTemp(int);
-	int getTemp(int)const;
+	void addTemp(float);
+	float getTemp(int);
 	
 	int getSize() const;
 	string getID()const;
-	int getMax(int,int)const;
-	int getMin(int,int)const;
-	int getAvg(int,int)const;
+	float getMax(int,int);
+	float getMin(int,int);
+	float getAvg(int,int);
 	int getCount(int,int)const;
 };
 

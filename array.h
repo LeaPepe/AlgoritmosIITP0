@@ -3,6 +3,7 @@
 //probando
 #include <iostream>
 #include <stdio.h>
+
 using namespace std;
 //plantilla de Array
 template <class T>
@@ -86,8 +87,8 @@ bool Array <T>::operator==(const Array <T> & arr)const{
 //operador de vector
 template<class T>
 T& Array <T>::operator[](int pos){
-	if(size>=pos){
-		return 0; //no se como hacerlo 
+	if(pos<0 || pos > size){
+		return p[0]; //no se como hacerlo 
 	}else{
 		return p[pos];
 	}

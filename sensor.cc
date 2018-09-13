@@ -1,29 +1,26 @@
-#include <complejo.h>
 #include <iostream>
+#include <cstdlib>
 #include <cmath>
-
+#include <cstring>
+#include <sensor.h>
 //constructores
-sensor::sensor(){
-	this->ID = "sensor";
-	this->size = 0;
-	this->temp = New Array <int> ();
+Sensor::Sensor(){
+	ID = "Sensor";
+	size = 0;
 }
-sensor::sensor(char* name){
-	this->ID = name;
-	this->size = 0;
-	this->temp = New Array();
+Sensor::Sensor(string name){
+	ID = name;
+	size = 0;
 }
-sensor::sensor(const sensor& s){
+Sensor::Sensor(const Sensor& s){
 	ID = s.getID();
 	size = s.getSize();
-	temp = New Array(s.temp);
 }
 //destructor
-sensor::~sensor(){
-	delete temp;
+Sensor::~Sensor(){
 }
 // agregar temperatura
-void sensor::addTemp(int value){
+void Sensor::addTemp(float value){
 	while(size > temp.getSize()){
 		temp.enlarge();
 	}
@@ -31,11 +28,11 @@ void sensor::addTemp(int value){
 	size++;
 }
 //setear el nombre o cambiarlo
-void sensor::setID(string name){
+void Sensor::setID(string name){
 	ID = name;
 }
 //obtener un valor de temperatura
-int sensor::getTemp(int pos)const{
+float Sensor::getTemp(int pos){
 	if(size>pos){
 		return temp[pos];
 	}else{
@@ -44,33 +41,37 @@ int sensor::getTemp(int pos)const{
 	
 }
 //obtener el nombre
-sting sensor::getID()const{
-	return string;
+string Sensor::getID()const{
+	return ID;
+}
+
+int Sensor::getSize()const{
+	return size;
 }
 //obtener maximo
-int sensor::getMax(int min,int max)const{
-	int maxValue = 0;
+float Sensor::getMax(int min,int max){
+	float maxValue = 0;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
 	if(size < max ){
 		max = size;
 	}
 	//calculo del maximo
-	for(i = min; i<max;i++){
+	for(int i = min; i<max;i++){
 		if(maxValue < temp[i-1]){
 			maxValue = temp[i-1];
 		}
 	}
 	return maxValue;
 }
-//obtener maximo
-int sensor::getMin(int min,int max)const{
-	int minValue = 0;
+//obtener minimo
+float Sensor::getMin(int min,int max){
+	float minValue = 0;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
 	if(size < max ){
 		max = size;
 	}
 	//calculo del maximo
-	for(i = min; i<max;i++){
+	for(int i = min; i<max;i++){
 		if(minValue > temp[i-1]){
 			minValue = temp[i-1];
 		}
@@ -78,15 +79,15 @@ int sensor::getMin(int min,int max)const{
 	return minValue;
 }
 //obtener promedio
-int sensor::getAvg(int min,int max)const{
-	int avgValue = 0;
+float Sensor::getAvg(int min,int max){
+	float avgValue = 0;
 	int count;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
 	if(size < max ){ 
 		max = size;
 	}
 	//calculo de suma avg
-	for(i = min; i<max;i++){
+	for(int i = min; i<max;i++){
 		avgValue += temp[i-1];
 		count++;
 	}
@@ -96,8 +97,7 @@ int sensor::getAvg(int min,int max)const{
 	return avgValue/count;	
 }
 //obtener cantidad de muestras de un rango de posiciones
-int getCount(int min,int max)const{
-	int count;
+int Sensor::getCount(int min,int max)const{
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
 	if(size < max ){ 
 		max = size;

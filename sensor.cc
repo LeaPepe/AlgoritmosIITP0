@@ -6,54 +6,41 @@
 //constructores
 Sensor::Sensor(){
 	ID = "Sensor";
-	size = 0;
 }
-Sensor::Sensor(string name){
+Sensor::Sensor(const string& name){
 	ID = name;
-	size = 0;
 }
 Sensor::Sensor(const Sensor& s){
 	ID = s.getID();
-	size = s.getSize();
+	temp = s.temp;
 }
 //destructor
 Sensor::~Sensor(){
 }
-// agregar temperatura
-void Sensor::addTemp(float value){
-	while(size > temp.getSize()){
-		temp.enlarge();
-	}
-	temp[size] = value;
-	size++;
-}
-//setear el nombre o cambiarlo
-void Sensor::setID(string name){
-	ID = name;
-}
+
 //obtener un valor de temperatura
 float Sensor::getTemp(int pos){
-	if(size>pos){
-		return temp[pos];
-	}else{
-		return 0;
-	}
-	
+	return temp[pos];
 }
 //obtener el nombre
-string Sensor::getID()const{
+const string& Sensor::getID()const{
 	return ID;
 }
 
 int Sensor::getSize()const{
-	return size;
+	return temp.size();
+}
+
+void Sensor::clear(){
+	temp.clear();
+	ID.clear();
 }
 //obtener maximo
 float Sensor::getMax(int min,int max){
 	float maxValue = 0;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(size < max ){
-		max = size;
+	if(temp.size() < max ){
+		max = temp.size();
 	}
 	//calculo del maximo
 	for(int i = min; i<max;i++){
@@ -67,8 +54,8 @@ float Sensor::getMax(int min,int max){
 float Sensor::getMin(int min,int max){
 	float minValue = 0;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(size < max ){
-		max = size;
+	if(temp.size() < max ){
+		max = temp.size();
 	}
 	//calculo del maximo
 	for(int i = min; i<max;i++){
@@ -83,8 +70,8 @@ float Sensor::getAvg(int min,int max){
 	float avgValue = 0;
 	int count;
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(size < max ){ 
-		max = size;
+	if(temp.size() < max ){ 
+		max = temp.size();
 	}
 	//calculo de suma avg
 	for(int i = min; i<max;i++){
@@ -99,8 +86,37 @@ float Sensor::getAvg(int min,int max){
 //obtener cantidad de muestras de un rango de posiciones
 int Sensor::getCount(int min,int max)const{
 	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(size < max ){ 
-		max = size;
+	if(temp.size() < max ){ 
+		max = temp.size();
 	}
 	return max-min;
+}
+
+std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
+
+	os << "Sensor ID: " << sensor.getID() << endl;
+	os << "Temperaturas:"<<endl;
+	os << sensor.temp <<endl;
+
+	return os;
+}
+
+Sensor& Sensor::operator+(const float value){
+	temp.push_back(value);
+	return *this;
+}
+
+Sensor& Sensor::operator=(const string& name){
+	ID = name;
+	return *this;
+}
+
+Sensor& Sensor::operator=(const Sensor& s){
+	ID = s.ID;
+	temp = s.temp;
+}
+
+std::istream & operator>> (std::istream& is,Sensor& sensor){
+	cout << " istream no implementado";
+	return is;
 }

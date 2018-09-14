@@ -9,25 +9,31 @@
 using namespace std;
 
 class Sensor {
-	int size;
 	string ID;
 	Array<float> temp;
 
 public:
 	Sensor();
-	Sensor(string);
+	Sensor(const string&);
 	Sensor(const Sensor&);
 	~Sensor();
-	void setID(string);
-	void addTemp(float);
-	float getTemp(int);
 	
+	
+	float getTemp(int);
 	int getSize() const;
-	string getID()const;
+	const string& getID()const;
+	void clear();
 	float getMax(int,int);
 	float getMin(int,int);
 	float getAvg(int,int);
 	int getCount(int,int)const;
+	
+	Sensor& operator+(const float);
+	Sensor& operator=(const string&);
+	Sensor& operator=(const Sensor&);
+	
+	friend std::ostream& operator<<(std::ostream&,const Sensor&);
+	friend std::istream& operator>>(std::istream&,Sensor&);
 };
 
 #endif

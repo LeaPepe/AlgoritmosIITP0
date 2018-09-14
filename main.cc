@@ -83,22 +83,31 @@ static void opt_help(string const &arg){
 	exit(0);
 }
 
-void readData(istream* input, Array <Sensor> & sensores){
+void readData(istream& input, Array <Sensor> & sensores){
 	cout << "la funcion readData anda bien"<<endl;
 }
 
-void querryData(istream* input, Array <Sensor> & sensores,ostream* output){
+void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	cout << "la funcion querryData anda bien"<<endl;
 }
 
 // ---- main ---- //
 int main(int argc, char * const argv[]){
 	Array <Sensor> sensores;
+	Sensor s;
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 	// ahora puedo trabajar con con flujos iss idss oss
-	readData(idss,sensores);
-	querryData(iss,sensores,oss);
+	readData(*idss,sensores);
+	querryData(*iss,sensores,*oss);
+	s = "CPU_sensor";
+	s + 41.3 + 41.2 + 40.4;
+	sensores.push_back(s);
+	s.clear();
+	s = "GPU_sensor";
+	s + 40.2 + 41.0 + 43.2;
+	sensores.push_back(s);
+	cout << endl << sensores[0] << endl << sensores[1] << endl;
+	return 0;
 }
-

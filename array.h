@@ -212,7 +212,7 @@ std::istream & operator>> (std::istream& is,Array<T>& arr)
 	// esperado, limpio el arreglo (devuelvo uno sin elementos)
 	// Si llega a EOF, marcará en el istream
 
-	T aux;
+	T aux = 0;
 	char ch = 0;
 
 	arr.clear();

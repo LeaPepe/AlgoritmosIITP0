@@ -86,7 +86,7 @@ static void opt_help(string const &arg){
 void readData(istream& input, Array <Sensor> & sensores){
 	string line;
 	string token;
-	float value;
+	float value = NULL;
 	Sensor s;
 	char delim;
 	istringstream lineStream;
@@ -100,9 +100,23 @@ void readData(istream& input, Array <Sensor> & sensores){
 	line.clear();
 	lineStream.clear();
 	//parseo el resto de las lineas
-	while(getline(input,line)){
-		cout << "  ,  ";
-		cout << line.size();
+	
+	string aux = line;
+	getline(input,line);
+	
+	while(line!=aux){
+		int count = 0;
+		istringstream lineStream2;
+		lineStream2.str(line);
+		while(getline(lineStream2,token,',')){
+
+			sensores[count]+atof(token.c_str());
+			count++;
+		}
+
+		 aux = line;
+		getline(input,line);
+
 	}
 	cout << "la funcion readData anda bien"<<endl;
 }
@@ -121,14 +135,14 @@ int main(int argc, char * const argv[]){
 	// ahora puedo trabajar con con flujos iss idss oss
 	readData(*idss,sensores);
 	querryData(*iss,sensores,*oss);
-	s = "CPU_sensor";
-	s + 41.3 + 41.2 + 40.4;
-	sensores.push_back(s);
-	s.clear();
-	s = "GPU_sensor";
-	s + 40.2 + 41.0 + 43.2;
-	sensores.push_back(s);
-	cout << endl;
+	// s = "CPU_sensor";
+	// s + 41.3 + 41.2 + 40.4;
+	// sensores.push_back(s);
+	// s.clear();
+	// s = "GPU_sensor";
+	// s + 40.2 + 41.0 + 43.2;
+	// sensores.push_back(s);
+	// cout << endl;
 	for(int i=0;i<sensores.size();i++){
 		cout << sensores[i] << endl;
 	}

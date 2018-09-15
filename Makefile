@@ -3,7 +3,7 @@ CXXFLAGS = -I. $(CXXARGS)
 LDFLAGS  =
 CXX      = c++
 
-all: main
+all: clean main
 	@/bin/true
 
 main: main.o sensor.o cmdline.o

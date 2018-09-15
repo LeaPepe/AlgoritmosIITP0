@@ -84,6 +84,26 @@ static void opt_help(string const &arg){
 }
 
 void readData(istream& input, Array <Sensor> & sensores){
+	string line;
+	string token;
+	float value;
+	Sensor s;
+	char delim;
+	istringstream lineStream;
+	//parseo de la primera linea (nombres)
+	getline(input,line);			//obtengo linea del input
+	lineStream.str(line);			// la stremeo
+	while(getline(lineStream,token,',')){	//obtengo los valores separados por coma
+		s = token;					//asigno el nombre al objeto sensor
+		sensores.push_back(s);		//pusheo al array el nuevo objeto
+	}
+	line.clear();
+	lineStream.clear();
+	//parseo el resto de las lineas
+	while(getline(input,line)){
+		cout << "  ,  ";
+		cout << line.size();
+	}
 	cout << "la funcion readData anda bien"<<endl;
 }
 
@@ -108,6 +128,9 @@ int main(int argc, char * const argv[]){
 	s = "GPU_sensor";
 	s + 40.2 + 41.0 + 43.2;
 	sensores.push_back(s);
-	cout << endl << sensores[0] << endl << sensores[1] << endl;
+	cout << endl;
+	for(int i=0;i<sensores.size();i++){
+		cout << sensores[i] << endl;
+	}
 	return 0;
 }

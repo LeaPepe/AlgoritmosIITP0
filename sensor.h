@@ -23,15 +23,12 @@ public:
 	int getSize() const;
 	const string& getID()const;
 	void clear();
-	float getMax(int,int);
-	float getMin(int,int);
-	float getAvg(int,int);
-	int getCount(int,int)const;
+	void querry(ostream output,size_t,size_t);
 	
 	Sensor& operator+(const float);
 	Sensor& operator=(const string&);
 	Sensor& operator=(const Sensor&);
-	
+	bool compareName(string const &);
 	friend std::ostream& operator<<(std::ostream&,const Sensor&);
 	friend std::istream& operator>>(std::istream&,Sensor&);
 };

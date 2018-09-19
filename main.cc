@@ -113,15 +113,46 @@ void readData(istream& input, Array <Sensor> & sensores){
 			sensores[count]+atof(token.c_str());
 			count++;
 		}
-
-		 aux = line;
+		aux = line;
 		getline(input,line);
-
 	}
-	cout << "la funcion readData anda bien"<<endl;
 }
 
 void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
+	
+	string aux = line;
+	getline(input,line);
+	
+	while(line!=aux){
+		bool exist = false;
+		size_t sensorPos;
+		
+		istringstream lineStream;
+		lineStream.str(line);
+		getline(lineStream,name,',');
+		
+		for(int i = 0;i<sensores.size();i++){
+			if(sensores[i].compareName(name)){
+				exist = true;
+				getline(lineStream,aux,',');
+				
+				
+				
+			}
+		}
+		if(exist == false){
+			cout << 
+			getline(lineStream,name,',');
+			
+		}
+			
+		aux = line;
+		getline(input,line);
+	}
+	
+	
+	
+	
 	cout << "la funcion querryData anda bien"<<endl;
 }
 

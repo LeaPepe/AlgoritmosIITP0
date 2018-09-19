@@ -35,61 +35,35 @@ void Sensor::clear(){
 	temp.clear();
 	ID.clear();
 }
-//obtener maximo
-float Sensor::getMax(int min,int max){
-	float maxValue = 0;
-	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(temp.size() < max ){
-		max = temp.size();
+
+void Sensor::querry(ostream output,size_t minRange,size_t maxRange){
+	float avg = 0,min = 0,max = 0;
+	int count = 0;
+	if(minRange > maxRange){
+		output << "BAD QUERRY" << endl;
+		return;
 	}
-	//calculo del maximo
-	for(int i = min; i<max;i++){
-		if(maxValue < temp[i-1]){
-			maxValue = temp[i-1];
+	if(minRange > temp.size()){
+		output << "NO DATA" << endl;
+		return;
+	}
+	if(maxRange > temp.size()){
+		maxRange = temp.size();
+	}
+	min = max = temp[minRange]; //inicializo los min y max
+	for(int i = minRange; i<=maxRange;i++){
+		if(temp[i] < min){
+			min = temp[i];
+		}else{
+			if(temp[i] > max){
+				max = temp[i];
+			}
 		}
-	}
-	return maxValue;
-}
-//obtener minimo
-float Sensor::getMin(int min,int max){
-	float minValue = 0;
-	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(temp.size() < max ){
-		max = temp.size();
-	}
-	//calculo del maximo
-	for(int i = min; i<max;i++){
-		if(minValue > temp[i-1]){
-			minValue = temp[i-1];
-		}
-	}
-	return minValue;
-}
-//obtener promedio
-float Sensor::getAvg(int min,int max){
-	float avgValue = 0;
-	int count;
-	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(temp.size() < max ){ 
-		max = temp.size();
-	}
-	//calculo de suma avg
-	for(int i = min; i<max;i++){
-		avgValue += temp[i-1];
+		avg+=temp[i];
 		count++;
 	}
-	if(count == 0){
-		return 0;
-	}
-	return avgValue/count;	
-}
-//obtener cantidad de muestras de un rango de posiciones
-int Sensor::getCount(int min,int max)const{
-	//si el maximo se pasa de la cantidad de muestras, fijo el size de muestra como max
-	if(temp.size() < max ){ 
-		max = temp.size();
-	}
-	return max-min;
+	avg = avg/count;
+	output << avg << ',' << min << ',' << max << ',' << count << endl;
 }
 
 std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
@@ -114,6 +88,11 @@ Sensor& Sensor::operator=(const string& name){
 Sensor& Sensor::operator=(const Sensor& s){
 	ID = s.ID;
 	temp = s.temp;
+	return *this;
+}
+
+bool Sensor :: compareName(string const & name){
+	return ID==name;
 }
 
 std::istream & operator>> (std::istream& is,Sensor& sensor){

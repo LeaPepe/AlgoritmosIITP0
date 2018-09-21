@@ -84,76 +84,68 @@ static void opt_help(string const &arg){
 }
 
 void readData(istream& input, Array <Sensor> & sensores){
-	string line;
-	string token;
-	float value = NULL;
-	Sensor s;
-	char delim;
-	istringstream lineStream;
+	string line,token;
+	istringstream lineStr;
+	Sensor sensorAux;
+	
 	//parseo de la primera linea (nombres)
-	getline(input,line);			//obtengo linea del input
-	lineStream.str(line);			// la stremeo
-	while(getline(lineStream,token,',')){	//obtengo los valores separados por coma
-		s = token;					//asigno el nombre al objeto sensor
-		sensores.push_back(s);		//pusheo al array el nuevo objeto
+	getline(input,line);				//obtengo linea del input
+	lineStr.str(line);					// la streameo
+	
+	while(getline(lineStr,token,',')){	//obtengo los valores separados por coma
+		sensorAux = token;				//asigno el nombre al objeto sensor auxiliar
+		sensores.push_back(sensorAux);	//pusheo al array el nuevo objeto
 	}
-	line.clear();
-	lineStream.clear();
-	//parseo el resto de las lineas
 	
-	string aux = line;
-	getline(input,line);
-	
-	while(line!=aux){
+	while(getline(input,line)){
 		int count = 0;
-		istringstream lineStream2;
-		lineStream2.str(line);
-		while(getline(lineStream2,token,',')){
-
+		lineStr.clear();
+		lineStr.str(line);
+		while(getline(lineStr,token,',')){
 			sensores[count]+atof(token.c_str());
 			count++;
 		}
-		aux = line;
-		getline(input,line);
 	}
 }
 
 void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	
-	string aux = line;
-	getline(input,line);
+	string line,token;
+	istringstream lineStr;
+	Sensor sAux;
+	int pos,min,max;
+	char ch;
+	bool good = false;
 	
-	while(line!=aux){
-		bool exist = false;
-		size_t sensorPos;
-		
-		istringstream lineStream;
-		lineStream.str(line);
-		getline(lineStream,name,',');
-		
-		for(int i = 0;i<sensores.size();i++){
-			if(sensores[i].compareName(name)){
-				exist = true;
-				getline(lineStream,aux,',');
-				
-				
-				
+	while(getline(input,line)){
+		lineStr.clear();
+		lineStr.str(line);
+		getline(lineStr,token,',');
+		if(token.empty()){
+			output << "NO QUERRY" << endl;
+			continue;
+		}
+		sAux = token;
+		pos = sensores.linear_search(sAux);
+		if(pos == -1){
+			output << "UNKNOWN ID" << endl;
+		}else{
+			if(lineStr >> min &&
+			lineStr >> ch && ch == ',' &&
+			lineStr >> max){
+				good = true;	
+			} else {
+				good = false;
+			}
+			if(good){
+				sensores[pos].querry(output, min, max);
+			}else{
+				output << "BAD QUERRY" << endl;
+				output << min << ',' << max << endl;
 			}
 		}
-		if(exist == false){
-			cout << 
-			getline(lineStream,name,',');
-			
-		}
-			
-		aux = line;
-		getline(input,line);
+	good = false;
 	}
-	
-	
-	
-	
-	cout << "la funcion querryData anda bien"<<endl;
 }
 
 // ---- main ---- //
@@ -165,17 +157,14 @@ int main(int argc, char * const argv[]){
 	cmdl.parse(argc, argv);
 	// ahora puedo trabajar con con flujos iss idss oss
 	readData(*idss,sensores);
-	querryData(*iss,sensores,*oss);
-	// s = "CPU_sensor";
-	// s + 41.3 + 41.2 + 40.4;
-	// sensores.push_back(s);
-	// s.clear();
-	// s = "GPU_sensor";
-	// s + 40.2 + 41.0 + 43.2;
-	// sensores.push_back(s);
-	// cout << endl;
-	for(int i=0;i<sensores.size();i++){
-		cout << sensores[i] << endl;
-	}
+	// imprimo sensores en pantalla
+	// cout << endl << "--- Sensores ---" << endl;
+	// for(int i=0;i<sensores.size();i++){
+		// cout << sensores[i] << endl;
+	// }
+	// querry
+	cout << endl << endl;
+	querryData(*iss,sensores,*oss);	
 	return 0;
+	
 }

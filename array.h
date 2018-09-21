@@ -20,15 +20,18 @@ public:
 	Array(size_t n); 
 	Array( const Array<T> & ); 
 	~Array( ); 
+	
 	size_t	size( ) const; 
-	Array<T>&	operator=( const Array<T> & ); 
-	bool 		operator==( const Array<T> & ) const; 
-	bool 		operator!=( const Array<T> & ) const; 
-	T &		operator[ ]( int );
-	T const &	operator[ ]( int ) const;
-	void		push_back(const T&);
-	int 		linear_search(T&);
-	void		clear();
+	void push_back(const T&);
+	int linear_search(T&);
+	void clear();
+	
+	Array<T>& operator=( const Array<T> & ); 
+	bool operator==( const Array<T> & ) const; 
+	bool operator!=( const Array<T> & ) const; 
+	T& operator[ ]( int );
+	
+	const T& operator[ ]( int ) const;
 	template <typename TT>
 	friend std::ostream& operator<<(std::ostream&,const Array<TT>&);
 	template <typename TT>

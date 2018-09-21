@@ -12,15 +12,15 @@ Sensor::Sensor(const string& name){
 }
 Sensor::Sensor(const Sensor& s){
 	ID = s.getID();
-	temp = s.temp;
+	data = s.data;
 }
 //destructor
 Sensor::~Sensor(){
 }
 
-//obtener un valor de temperatura
-float Sensor::getTemp(int pos){
-	return temp[pos];
+//obtener un valor de dataeratura
+float Sensor::getData(int pos){
+	return data[pos];
 }
 //obtener el nombre
 const string& Sensor::getID()const{
@@ -28,38 +28,38 @@ const string& Sensor::getID()const{
 }
 
 int Sensor::getSize()const{
-	return temp.size();
+	return data.size();
 }
 
 void Sensor::clear(){
-	temp.clear();
+	data.clear();
 	ID.clear();
 }
 
-void Sensor::querry(ostream output,size_t minRange,size_t maxRange){
+void Sensor::querry(ostream& output,int minRange,int maxRange){
 	float avg = 0,min = 0,max = 0;
 	int count = 0;
 	if(minRange > maxRange){
-		output << "BAD QUERRY" << endl;
+		output << "BAD QUERRY range" << endl;
 		return;
 	}
-	if(minRange > temp.size()){
+	if(minRange > data.size()){
 		output << "NO DATA" << endl;
 		return;
 	}
-	if(maxRange > temp.size()){
-		maxRange = temp.size();
+	if(maxRange > data.size()){
+		maxRange = data.size();
 	}
-	min = max = temp[minRange]; //inicializo los min y max
+	min = max = data[minRange]; //inicializo los min y max
 	for(int i = minRange; i<=maxRange;i++){
-		if(temp[i] < min){
-			min = temp[i];
+		if(data[i] < min){
+			min = data[i];
 		}else{
-			if(temp[i] > max){
-				max = temp[i];
+			if(data[i] > max){
+				max = data[i];
 			}
 		}
-		avg+=temp[i];
+		avg+=data[i];
 		count++;
 	}
 	avg = avg/count;
@@ -70,13 +70,13 @@ std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 
 	os << "Sensor ID: " << sensor.getID() << endl;
 	os << "Temperaturas:"<<endl;
-	os << sensor.temp <<endl;
+	os << sensor.data <<endl;
 
 	return os;
 }
 
 Sensor& Sensor::operator+(const float value){
-	temp.push_back(value);
+	data.push_back(value);
 	return *this;
 }
 
@@ -87,12 +87,12 @@ Sensor& Sensor::operator=(const string& name){
 
 Sensor& Sensor::operator=(const Sensor& s){
 	ID = s.ID;
-	temp = s.temp;
+	data = s.data;
 	return *this;
 }
 
-bool Sensor :: compareName(string const & name){
-	return ID==name;
+bool Sensor :: operator==(const Sensor& s){
+	return s.ID==ID;
 }
 
 std::istream & operator>> (std::istream& is,Sensor& sensor){

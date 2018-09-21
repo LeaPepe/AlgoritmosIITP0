@@ -79,6 +79,10 @@ Sensor& Sensor::operator+(const float value){
 	data.push_back(value);
 	return *this;
 }
+Sensor& Sensor::operator+(const Sensor& s){
+	data.push_back(s.data);
+	return *this;
+}
 
 Sensor& Sensor::operator=(const string& name){
 	ID = name;

@@ -23,6 +23,7 @@ public:
 	
 	size_t	size( ) const; 
 	void push_back(const T&);
+	void push_back(const Array&);
 	int linear_search(T&);
 	void clear();
 	
@@ -187,6 +188,16 @@ void Array<T>::push_back(const T &value)
 	p[usedSize] = value;
 	usedSize++;
 }
+
+
+template <typename T> 
+void Array<T>::push_back(const Array& value)
+{
+	for(int i=0; i<value.size();i++){
+		this->push_back(value[i]);
+	}
+}
+
 
 template <typename T> 
 std::ostream & operator<< (std::ostream& os,const Array<T> & arr)

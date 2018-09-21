@@ -112,39 +112,41 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	
 	string line,token;
 	istringstream lineStr;
-	Sensor sAux;
 	int pos,min,max;
 	char ch;
 	bool good = false;
 	
+	//Leo el querry linea por linea y hago las consultas
 	while(getline(input,line)){
+		Sensor sAux;
 		lineStr.clear();
 		lineStr.str(line);
+		
 		getline(lineStr,token,',');
-		if(token.empty()){
-			output << "SENSOR NAME MISSING" << endl;
-			continue;
-		}
-		sAux = token;
-		pos = sensores.linear_search(sAux);
-		if(pos == -1){
-			output << "UNKNOWN ID" << endl;
-		}else{
-			if(lineStr >> min &&
+		if(lineStr >> min &&
 			lineStr >> ch && ch == ',' &&
 			lineStr >> max){
 				good = true;	
-			} else {
-				good = false;
-			}
-			if(good){
-				sensores[pos].querry(output, min, max);
-			}else{
-				output << "BAD QUERRY PARSE ERROR" << endl;
-				output << min << ',' << max << endl;
-			}
+		} else {
+			good = false;
 		}
-	good = false;
+		if(good && token.empty()){
+			for(int i=min;i<std::min(static_cast<int>(sensores.size()),max-1);i++){
+				sAux+sensores[i];
+			}
+			//cout << sAux;
+			sAux.querry(output,min,max);
+		}else if(good){
+			sAux = token;
+			if(pos == -1){
+				output << "UNKNOWN ID" << endl;
+				continue;
+			}
+			pos = sensores.linear_search(sAux);
+			sensores[pos].querry(output, min, max);
+		}else{
+			output << "BAD QUERRY PARSE ERROR" << endl;
+		}
 	}
 }
 
@@ -161,10 +163,10 @@ int main(int argc, char * const argv[]){
 	readData(*idss,sensores);
 	
 	// imprimo sensores en pantalla
-	cout << endl << "--- Sensores ---" << endl;
-	for(int i=0;i<sensores.size();i++){
-		cout << sensores[i] << endl;
-	}
+	// cout << endl << "--- Sensores ---" << endl;
+	// for(int i=0;i<sensores.size();i++){
+		// cout << sensores[i] << endl;
+	// }
 	
 	// querry
 	cout << endl << endl;

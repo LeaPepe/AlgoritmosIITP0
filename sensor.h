@@ -11,7 +11,6 @@ using namespace std;
 class Sensor {
 	string ID;
 	Array<float> data;
-
 public:
 	Sensor();
 	Sensor(const string&);
@@ -25,6 +24,7 @@ public:
 	void querry(ostream&,int,int);
 	
 	Sensor& operator+(const float);
+	Sensor& operator+(const Sensor&);
 	Sensor& operator=(const string&);
 	Sensor& operator=(const Sensor&);
 	bool operator==(const Sensor&);

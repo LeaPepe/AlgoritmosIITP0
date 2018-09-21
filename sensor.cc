@@ -47,11 +47,11 @@ void Sensor::querry(ostream& output,int minRange,int maxRange){
 		output << "NO DATA IN RANGE" << endl;
 		return;
 	}
-	if(maxRange > data.size()){
+	if(maxRange > data.size()-1){
 		maxRange = data.size();
 	}
 	min = max = data[minRange]; //inicializo los min y max
-	for(int i = minRange; i<=maxRange;i++){
+	for(int i = minRange; i<=maxRange-1;i++){
 		if(data[i] < min){
 			min = data[i];
 		}else{
@@ -69,8 +69,8 @@ void Sensor::querry(ostream& output,int minRange,int maxRange){
 std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 
 	os << "Sensor ID: " << sensor.getID() << endl;
-	os << "Temperaturas:"<<endl;
-	os << sensor.data <<endl;
+	os << "Dato:" << endl;
+	os << sensor.data << endl;
 	os << "Cantidad de datos: " << sensor.getSize() << endl;
 	return os;
 }

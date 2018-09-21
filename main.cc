@@ -120,6 +120,7 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	while(getline(input,line)){
 		Sensor sAux;
 		istringstream lineStr;
+		lineStr.str(line);
 		//leo primer variable (nombre)
 		getline(lineStr,token,',');
 		//leo minimo y maximo, checkeando si esta bien
@@ -131,11 +132,13 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 			good = false;
 		}
 		if(good && token.empty()){
-			for(int i=min;i<std::min(static_cast<int>(sensores.size()),max-1);i++){
-				sAux+sensores[i];
+			for(int j=0;j<sensores.size();j++){
+				for (int i = min; i < std::min(static_cast<int>(sensores.size()), max - 1); i++) {
+					sAux + sensores[j].getData(i);
+				}
 			}
 			//cout << sAux;
-			sAux.querry(output,min,max);
+			sAux.querry(output,0,sAux.getSize());
 		}else if(good){
 			sAux = token;
 			if(pos == -1){

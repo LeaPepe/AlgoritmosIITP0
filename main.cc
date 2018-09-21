@@ -122,7 +122,7 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 		lineStr.str(line);
 		getline(lineStr,token,',');
 		if(token.empty()){
-			output << "NO QUERRY" << endl;
+			output << "SENSOR NAME MISSING" << endl;
 			continue;
 		}
 		sAux = token;
@@ -140,7 +140,7 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 			if(good){
 				sensores[pos].querry(output, min, max);
 			}else{
-				output << "BAD QUERRY" << endl;
+				output << "BAD QUERRY PARSE ERROR" << endl;
 				output << min << ',' << max << endl;
 			}
 		}
@@ -152,16 +152,20 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 int main(int argc, char * const argv[]){
 	Array <Sensor> sensores;
 	Sensor s;
+	
 	//parseo de la entrada
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
-	// ahora puedo trabajar con con flujos iss idss oss
+	
+	// lectura de datos
 	readData(*idss,sensores);
+	
 	// imprimo sensores en pantalla
-	// cout << endl << "--- Sensores ---" << endl;
-	// for(int i=0;i<sensores.size();i++){
-		// cout << sensores[i] << endl;
-	// }
+	cout << endl << "--- Sensores ---" << endl;
+	for(int i=0;i<sensores.size();i++){
+		cout << sensores[i] << endl;
+	}
+	
 	// querry
 	cout << endl << endl;
 	querryData(*iss,sensores,*oss);	

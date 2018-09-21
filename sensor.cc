@@ -40,11 +40,11 @@ void Sensor::querry(ostream& output,int minRange,int maxRange){
 	float avg = 0,min = 0,max = 0;
 	int count = 0;
 	if(minRange > maxRange){
-		output << "BAD QUERRY range" << endl;
+		output << "BAD QUERRY BAD RANGE" << endl;
 		return;
 	}
 	if(minRange > data.size()){
-		output << "NO DATA" << endl;
+		output << "NO DATA IN RANGE" << endl;
 		return;
 	}
 	if(maxRange > data.size()){
@@ -71,7 +71,7 @@ std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 	os << "Sensor ID: " << sensor.getID() << endl;
 	os << "Temperaturas:"<<endl;
 	os << sensor.data <<endl;
-
+	os << "Cantidad de datos: " << sensor.getSize() << endl;
 	return os;
 }
 

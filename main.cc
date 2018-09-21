@@ -111,7 +111,7 @@ void readData(istream& input, Array <Sensor> & sensores){
 void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	
 	string line,token;
-	istringstream lineStr;
+	
 	int pos,min,max;
 	char ch;
 	bool good = false;
@@ -119,10 +119,10 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 	//Leo el querry linea por linea y hago las consultas
 	while(getline(input,line)){
 		Sensor sAux;
-		lineStr.clear();
-		lineStr.str(line);
-		
+		istringstream lineStr;
+		//leo primer variable (nombre)
 		getline(lineStr,token,',');
+		//leo minimo y maximo, checkeando si esta bien
 		if(lineStr >> min &&
 			lineStr >> ch && ch == ',' &&
 			lineStr >> max){
@@ -169,7 +169,6 @@ int main(int argc, char * const argv[]){
 	// }
 	
 	// querry
-	cout << endl << endl;
 	querryData(*iss,sensores,*oss);	
 	return 0;
 	

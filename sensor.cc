@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
-#include <cmath>
-#include <cstring>
+//#include <cmath>
+//#include <cstring>
 #include <sensor.h>
 //constructores
 Sensor::Sensor(){
@@ -19,7 +19,7 @@ Sensor::~Sensor(){
 }
 
 //obtener un valor de dataeratura
-float Sensor::getData(int pos){
+double Sensor::getData(int pos){
 	return data[pos];
 }
 //obtener el nombre
@@ -37,7 +37,7 @@ void Sensor::clear(){
 }
 
 void Sensor::querry(ostream& output,int minRange,int maxRange){
-	float avg = 0,min = 0,max = 0;
+	double avg = 0,min = 0,max = 0;
 	int count = 0;
 	if(minRange > maxRange){
 		output << "BAD QUERRY BAD RANGE" << endl;
@@ -75,7 +75,7 @@ std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 	return os;
 }
 
-Sensor& Sensor::operator+(const float value){
+Sensor& Sensor::operator+(const double value){
 	data.push_back(value);
 	return *this;
 }

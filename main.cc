@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
+//#include <sstream>
 #include <cstdlib>
-#include <string>
+//#include <string>
 #include <cmdline.h>
 #include <array.h>
 #include <sensor.h>
@@ -78,8 +78,7 @@ static void opt_output(string const &arg){
 }
 
 static void opt_help(string const &arg){
-	cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)"
-	     << endl;
+	cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)" << endl;
 	exit(0);
 }
 
@@ -133,7 +132,7 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 		}
 		if(good && token.empty()){
 			for (int i = 0; i < sensores[0].getSize(); i++){
-				float valor=0;
+				double valor=0;
 				int count=0;
 				for(int j=0;j<sensores.size();j++){
 					valor += sensores[j].getData(i);
@@ -160,15 +159,15 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 
 // ---- main ---- //
 int main(int argc, char * const argv[]){
-	Array <Sensor> sensores;
-	Sensor s;
+	//Array <Sensor> sensores;
+	//Sensor s;
 	
 	//parseo de la entrada
-	cmdline cmdl(options);
-	cmdl.parse(argc, argv);
+	//cmdline cmdl(options);
+	//cmdl.parse(argc, argv);
 	
 	// lectura de datos
-	readData(*idss,sensores);
+	//readData(*idss,sensores);
 	
 	// imprimo sensores en pantalla
 	// cout << endl << "--- Sensores ---" << endl;
@@ -177,7 +176,8 @@ int main(int argc, char * const argv[]){
 	// }
 	
 	// querry
-	querryData(*iss,sensores,*oss);	
+	//querryData(*iss,sensores,*oss);	
+	
 	return 0;
 	
 }

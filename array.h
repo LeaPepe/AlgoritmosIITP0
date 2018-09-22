@@ -7,7 +7,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
-#include <stdio.h>
+//#include <stdio.h>
+using namespace std;
 
 #define ARRAY_DEFAULT_SIZE 1
 #define ARRAY_GROWTH_RATE 5
@@ -51,6 +52,8 @@ Array<T>::Array()
 	allocSize = ARRAY_DEFAULT_SIZE;
 	usedSize = 0;
 	p = new T[allocSize];
+
+cout << "Array created3. " <<  endl;
 }
 
 template <typename T> 
@@ -59,6 +62,8 @@ Array<T>::Array(size_t n)
 	allocSize = n;
 	usedSize = n;
 	p = new T[allocSize];
+
+cout << "Array created2. " <<  endl;
 }
 
 template <typename T> 
@@ -69,13 +74,17 @@ Array<T>::Array( const Array<T> &arr )
 	p = new T[ allocSize ];
 	for ( size_t i = 0; i < usedSize; i++ )
 		p[ i ] = arr.p[ i ]; 
+cout << "Array created. " <<  endl;
+	
 }
+
 
 template <typename T> 
 Array<T>::~Array()
 {
+	cout << "Array deleted. Size = " << usedSize << endl;
 	if (p)
-		delete[] p; 
+		delete[] p;
 }
 
 template <typename T> 

@@ -6,8 +6,8 @@ CXX      = c++
 all: clean main
 	@/bin/true
 
-main: main.o sensor.o cmdline.o
-	$(CXX) $(LDFLAGS) -o main sensor.o main.o cmdline.o
+main: main.o sensor.o cmdline.o 
+	$(CXX) $(LDFLAGS) -o tp0 sensor.o main.o cmdline.o
 
 main.o: main.h array.h cmdline.h sensor.h
 	$(CXX) $(CXXFLAGS) -c main.cc
@@ -29,7 +29,7 @@ test: main
 	@echo test ok.
 
 test-valgrind: main
-	@set -e; for t in test?; do                                  \
+	@set -e; for t in tp0?; do                                  \
 	  echo testing: $$t.;                                        \
 	  valgrind --tool=memcheck ./$$t <$$t.in >$$t.t 2>/dev/null; \
 	  diff -b $$t.ref $$t.t >/dev/null 2>&1;                     \

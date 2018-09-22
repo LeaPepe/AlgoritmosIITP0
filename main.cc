@@ -132,13 +132,18 @@ void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
 			good = false;
 		}
 		if(good && token.empty()){
-			for(int j=0;j<sensores.size();j++){
-				for (int i = min; i < std::min(static_cast<int>(sensores.size()), max - 1); i++) {
-					sAux + sensores[j].getData(i);
+			for (int i = 0; i < sensores[0].getSize(); i++){
+				float valor=0;
+				int count=0;
+				for(int j=0;j<sensores.size();j++){
+					valor += sensores[j].getData(i);
+					count++;
 				}
+					valor = valor/count; 
+					sAux + valor;	
 			}
 			//cout << sAux;
-			sAux.querry(output,0,sAux.getSize());
+			sAux.querry(output,min,max);
 		}else if(good){
 			sAux = token;
 			if(pos == -1){

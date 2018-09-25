@@ -1,16 +1,17 @@
+
 	//#include <fstream>
 	//#include <iomanip>
 	//#include <iostream>
 	//#include <sstream>
-	//#include <cstdlib>
+	#include <cstdlib>
 	//#include <string>
-	//#include <cmdline.h>
-	//#include <array.h>
-	//#include <sensor.h>
-	//#include <main.h>
+	#include <cmdline.h>
+	#include <array.h>
+	#include <sensor.h>
+	#include <main.h>
 
-	using namespace std;
-/*
+	//using namespace std;
+
 	static istream *iss = NULL;	// Input Stream 
 	static ostream *oss = NULL;	// Output Stream
 	static istream *idss = NULL;
@@ -81,8 +82,8 @@
 		cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)" << endl;
 		exit(0);
 	}
-*/
-/*
+
+
 	void readData(istream& input, Array <Sensor> & sensores){
 		// variables utilizadas
 		string line,token;
@@ -160,17 +161,17 @@
 			}
 		}
 	}
-*/
+
 	// ---- main ---- //
 	int main(int argc, char * const argv[]){
-		//Array<Sensor> sensores;
+		Array<Sensor> sensores;
 		
 		//parseo de la entrada
-		//cmdline cmdl(options);
-		//cmdl.parse(argc, argv);
+		cmdline cmdl(options);
+		cmdl.parse(argc, argv);
 		
 		// lectura de datos
-		//readData(*idss,sensores);
+		readData(*idss,sensores);
 		
 		// imprimo sensores en pantalla
 		// cout << endl << "--- Sensores ---" << endl;
@@ -179,7 +180,8 @@
 		// }
 		
 		// querry
-		//querryData(*iss,sensores,*oss);	
+		querryData(*iss,sensores,*oss);	
 		
 		return 0;
 	}
+	

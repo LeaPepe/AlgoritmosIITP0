@@ -18,10 +18,10 @@ public:
 	~Sensor();
 	
 	double getData(int);
-	int getSize() const;
+	size_t size() const;
 	const string& getID()const;
 	void clear();
-	void querry(ostream&,int,int);
+	void querry(ostream&,size_t,size_t);
 	
 	Sensor& operator+(const double);
 	Sensor& operator+(const Sensor&);

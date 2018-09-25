@@ -10,8 +10,8 @@
 //#include <stdio.h>
 using namespace std;
 
-#define ARRAY_DEFAULT_SIZE 1
-#define ARRAY_GROWTH_RATE 5
+#define ARRAY_DEFAULT_SIZE 4
+#define ARRAY_GROWTH_RATE 2
 
 template <typename T>
 class Array
@@ -42,7 +42,7 @@ public:
 private:
 	size_t allocSize; 
 	size_t usedSize;
-	T *p; 
+	T *p = NULL; 
 	void resize(size_t);
 };
 
@@ -53,7 +53,7 @@ Array<T>::Array()
 	usedSize = 0;
 	p = new T[allocSize];
 
-cout << "Array created3. " <<  endl;
+	//cout << "Array created empty. " <<  endl;
 }
 
 template <typename T> 
@@ -63,7 +63,7 @@ Array<T>::Array(size_t n)
 	usedSize = n;
 	p = new T[allocSize];
 
-cout << "Array created2. " <<  endl;
+	//cout << "Array created n" <<  endl;
 }
 
 template <typename T> 
@@ -74,7 +74,7 @@ Array<T>::Array( const Array<T> &arr )
 	p = new T[ allocSize ];
 	for ( size_t i = 0; i < usedSize; i++ )
 		p[ i ] = arr.p[ i ]; 
-cout << "Array created. " <<  endl;
+	//cout << "Array created. Copy " <<  endl;
 	
 }
 
@@ -82,7 +82,7 @@ cout << "Array created. " <<  endl;
 template <typename T> 
 Array<T>::~Array()
 {
-	cout << "Array deleted. Size = " << usedSize << endl;
+	//cout << "Array deleted. Size = " << usedSize << endl;
 	if (p)
 		delete[] p;
 }
@@ -140,7 +140,7 @@ template <typename T>
 T & Array<T>::operator [ ]( int pos )
 {
 	// Utilizamos assert para saber si se puede acceder al elemento.
-	assert( (0 < pos) || (pos < usedSize) ) ; 
+	//assert( (0 < pos) || (pos < usedSize) ) ; 
 	return p[pos]; 
 }
 
@@ -151,7 +151,7 @@ const T & Array<T>::operator [ ]( int pos ) const
 	// Es necesario si se llama desde dentro de una función que es const
 	// El compilador se dará cuenta de cual usar
 
-	assert( (0 < pos) || (pos < usedSize) ) ; 
+	//assert( (0 < pos) || (pos < usedSize) ) ; 
 	return p[pos]; 
 }
 
@@ -174,7 +174,7 @@ void Array<T>::resize(size_t new_size)
 	if( new_size < usedSize ){
 		usedSize = new_size;
 	}
-	for( size_t i=0;i<usedSize;++i){
+	for(size_t i=0;i<usedSize;++i){
 		aux[i] = p[i];
 	}
 	delete [] p;
@@ -196,7 +196,7 @@ void Array<T>::push_back(const T &value)
 template <typename T> 
 void Array<T>::push_back(const Array& value)
 {
-	for(int i=0; i<value.size();i++){
+	for(size_t i=0; i<value.size();i++){
 		this->push_back(value[i]);
 	}
 }

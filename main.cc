@@ -83,19 +83,20 @@
 	}
 
 	void readData(istream& input, Array <Sensor> & sensores){
+		//variables utilizadas
 		string line,token;
 		istringstream lineStr;
 		Sensor sensorAux;
 		
 		//parseo de la primera linea (nombres)
-		getline(input,line);				//obtengo linea del input
-		lineStr.str(line);					// la streameo
-		
-		while(getline(lineStr,token,',')){	//obtengo los valores separados por coma
-			sensorAux = token;				//asigno el nombre al objeto sensor auxiliar
-			sensores.push_back(sensorAux);	//pusheo al array el nuevo objeto
+		getline(input,line);					//obtengo linea del input
+		lineStr.str(line);						// la streameo
+		while(getline(lineStr,token,',')){		//obtengo los valores separados por coma
+			sensorAux = token;					//asigno el nombre al objeto sensor auxiliar
+			sensores.push_back(sensorAux);		//pusheo al array el nuevo objeto
 		}
 		
+		//parseo del resto de las lineas (temperaturas)
 		while(getline(input,line)){
 			int count = 0;
 			lineStr.clear();
@@ -111,7 +112,8 @@
 		
 		string line,token;
 		
-		int pos,min,max;
+		int pos;
+		size_t min,max;
 		char ch;
 		bool good = false;
 		
@@ -130,44 +132,44 @@
 			} else {
 				good = false;
 			}
-			if(good && token.empty()){
-				for (int i = 0; i < sensores[0].getSize(); i++){
+			//si no hay nombre en la consulta, se hace un promedio de los sensores
+			if(good && token.empty()){		
+				for (size_t i = 0; i < sensores[0].size(); i++){
 					double valor=0;
 					int count=0;
-					for(int j=0;j<sensores.size();j++){
+					for(size_t j=0;j<sensores.size();j++){
 						valor += sensores[j].getData(i);
 						count++;
 					}
 						valor = valor/count; 
 						sAux + valor;	
 				}
-				//cout << sAux;
 				sAux.querry(output,min,max);
+			//si hay nombre en la consulta
 			}else if(good){
 				sAux = token;
+				pos = sensores.linear_search(sAux);
 				if(pos == -1){
 					output << "UNKNOWN ID" << endl;
 					continue;
 				}
-				pos = sensores.linear_search(sAux);
 				sensores[pos].querry(output, min, max);
 			}else{
-				output << "BAD QUERRY PARSE ERROR" << endl;
+				output << "BAD QUERRY" << endl;
 			}
 		}
 	}
 
 	// ---- main ---- //
 	int main(int argc, char * const argv[]){
-		//Array <Sensor> sensores;
-		//Sensor s;
+		Array<Sensor> sensores;
 		
 		//parseo de la entrada
-		//cmdline cmdl(options);
-		//cmdl.parse(argc, argv);
+		cmdline cmdl(options);
+		cmdl.parse(argc, argv);
 		
 		// lectura de datos
-		//readData(*idss,sensores);
+		readData(*idss,sensores);
 		
 		// imprimo sensores en pantalla
 		// cout << endl << "--- Sensores ---" << endl;
@@ -176,8 +178,7 @@
 		// }
 		
 		// querry
-		//querryData(*iss,sensores,*oss);	
+		querryData(*iss,sensores,*oss);	
 		
 		return 0;
-		
 	}

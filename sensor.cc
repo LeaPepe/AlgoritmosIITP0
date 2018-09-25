@@ -27,7 +27,7 @@ const string& Sensor::getID()const{
 	return ID;
 }
 
-int Sensor::getSize()const{
+size_t Sensor::size()const{
 	return data.size();
 }
 
@@ -36,22 +36,22 @@ void Sensor::clear(){
 	ID.clear();
 }
 
-void Sensor::querry(ostream& output,int minRange,int maxRange){
+void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	double avg = 0,min = 0,max = 0;
 	int count = 0;
 	if(minRange > maxRange){
-		output << "BAD QUERRY BAD RANGE" << endl;
+		output << "BAD QUERRY" << endl;
 		return;
 	}
 	if(minRange > data.size()){
-		output << "NO DATA IN RANGE" << endl;
+		output << "NO DATA" << endl;
 		return;
 	}
 	if(maxRange > data.size()-1){
 		maxRange = data.size();
 	}
 	min = max = data[minRange]; //inicializo los min y max
-	for(int i = minRange; i<=maxRange-1;i++){
+	for(size_t i = minRange; i<=maxRange-1;i++){
 		if(data[i] < min){
 			min = data[i];
 		}else{
@@ -71,7 +71,7 @@ std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 	os << "Sensor ID: " << sensor.getID() << endl;
 	os << "Dato:" << endl;
 	os << sensor.data << endl;
-	os << "Cantidad de datos: " << sensor.getSize() << endl;
+	os << "Cantidad de datos: " << sensor.size() << endl;
 	return os;
 }
 
@@ -99,7 +99,7 @@ bool Sensor :: operator==(const Sensor& s){
 	return s.ID==ID;
 }
 
-std::istream & operator>> (std::istream& is,Sensor& sensor){
+std::istream & operator >> (std::istream& is,Sensor& sensor){
 	cout << " istream no implementado";
 	return is;
 }

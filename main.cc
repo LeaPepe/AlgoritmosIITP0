@@ -1,16 +1,16 @@
-	#include <fstream>
-	#include <iomanip>
-	#include <iostream>
+	//#include <fstream>
+	//#include <iomanip>
+	//#include <iostream>
 	//#include <sstream>
-	#include <cstdlib>
+	//#include <cstdlib>
 	//#include <string>
-	#include <cmdline.h>
-	#include <array.h>
-	#include <sensor.h>
-	#include <main.h>
+	//#include <cmdline.h>
+	//#include <array.h>
+	//#include <sensor.h>
+	//#include <main.h>
 
 	using namespace std;
-
+/*
 	static istream *iss = NULL;	// Input Stream 
 	static ostream *oss = NULL;	// Output Stream
 	static istream *idss = NULL;
@@ -81,14 +81,15 @@
 		cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)" << endl;
 		exit(0);
 	}
-
+*/
+/*
 	void readData(istream& input, Array <Sensor> & sensores){
-		//variables utilizadas
+		// variables utilizadas
 		string line,token;
 		istringstream lineStr;
 		Sensor sensorAux;
 		
-		//parseo de la primera linea (nombres)
+		// parseo de la primera linea (nombres)
 		getline(input,line);					//obtengo linea del input
 		lineStr.str(line);						// la streameo
 		while(getline(lineStr,token,',')){		//obtengo los valores separados por coma
@@ -96,7 +97,7 @@
 			sensores.push_back(sensorAux);		//pusheo al array el nuevo objeto
 		}
 		
-		//parseo del resto de las lineas (temperaturas)
+		// parseo del resto de las lineas (temperaturas)
 		while(getline(input,line)){
 			int count = 0;
 			lineStr.clear();
@@ -117,14 +118,14 @@
 		char ch;
 		bool good = false;
 		
-		//Leo el querry linea por linea y hago las consultas
+		// Leo el querry linea por linea y hago las consultas
 		while(getline(input,line)){
 			Sensor sAux;
 			istringstream lineStr;
 			lineStr.str(line);
-			//leo primer variable (nombre)
+			// leo primer variable (nombre)
 			getline(lineStr,token,',');
-			//leo minimo y maximo, checkeando si esta bien
+			// leo minimo y maximo, checkeando si esta bien
 			if(lineStr >> min &&
 				lineStr >> ch && ch == ',' &&
 				lineStr >> max){
@@ -132,7 +133,7 @@
 			} else {
 				good = false;
 			}
-			//si no hay nombre en la consulta, se hace un promedio de los sensores
+			// si no hay nombre en la consulta, se hace un promedio de los sensores
 			if(good && token.empty()){		
 				for (size_t i = 0; i < sensores[0].size(); i++){
 					double valor=0;
@@ -145,7 +146,7 @@
 						sAux + valor;	
 				}
 				sAux.querry(output,min,max);
-			//si hay nombre en la consulta
+			// si hay nombre en la consulta
 			}else if(good){
 				sAux = token;
 				pos = sensores.linear_search(sAux);
@@ -159,17 +160,17 @@
 			}
 		}
 	}
-
+*/
 	// ---- main ---- //
 	int main(int argc, char * const argv[]){
-		Array<Sensor> sensores;
+		//Array<Sensor> sensores;
 		
 		//parseo de la entrada
-		cmdline cmdl(options);
-		cmdl.parse(argc, argv);
+		//cmdline cmdl(options);
+		//cmdl.parse(argc, argv);
 		
 		// lectura de datos
-		readData(*idss,sensores);
+		//readData(*idss,sensores);
 		
 		// imprimo sensores en pantalla
 		// cout << endl << "--- Sensores ---" << endl;
@@ -178,7 +179,7 @@
 		// }
 		
 		// querry
-		querryData(*iss,sensores,*oss);	
+		//querryData(*iss,sensores,*oss);	
 		
 		return 0;
 	}

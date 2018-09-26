@@ -10,14 +10,14 @@
 	#include <sensor.h>
 	#include <main.h>
 
-	//using namespace std;
+	using namespace std;
 
-	static istream *iss = NULL;	// Input Stream 
-	static ostream *oss = NULL;	// Output Stream
-	static istream *idss = NULL;
-	static fstream ifs; 		// Input File Stream
-	static fstream ofs;		// Output File Stream
-	static fstream idfs;	// Input data stream
+	static istream *iss = NULL;		// Input Stream 
+	static ostream *oss = NULL;		// Output Stream
+	static istream *idss = NULL;	// Data Input Stream
+	static fstream ifs; 			// Input File Stream
+	static fstream ofs;				// Output File Stream
+	static fstream idfs;			// Data file stream
 
 	static option_t options[] = {
 		{1, "d", "data", NULL, opt_data, OPT_MANDATORY},
@@ -28,14 +28,14 @@
 	};
 
 	static void opt_input(string const &arg){
-		if (arg == "-") {
-			iss = &cin;		// Establezco cin como flujo de entrada
+		if (arg == "-") {	//Por defecto
+			iss = &cin;		// Entrada cin
 		}
-		else {
+		else {				// si no 
 			ifs.open(arg.c_str(), ios::in);
-			iss = &ifs;
+			iss = &ifs;		//abro archivo
 		}
-		// Verificamos que el stream este OK.
+		// Verificamos que el archivo se halla abierto.
 			if (!iss->good()) {
 				cerr << "cannot open querry input"
 					 << arg
@@ -48,9 +48,9 @@
 
 	static void opt_data(string const &arg){
 		
-		idfs.open(arg.c_str(), ios::in);
+		idfs.open(arg.c_str(), ios::in);	// archivo mandatorio
 		idss = &idfs;
-		// Verificamos que el stream este OK.
+		// Verificamos que el archivo se halla abierto.
 		if (!idss->good()) {
 			cerr << "cannot open data input"
 			     << arg
@@ -62,13 +62,13 @@
 
 	static void opt_output(string const &arg){
 
-		if (arg == "-") {
-			oss = &cout;	// Establezco la salida estandar cout como flujo de salida
-		} else {
+		if (arg == "-") {	// por defecto
+			oss = &cout;	// cout como salida
+		} else {			// si no
 			ofs.open(arg.c_str(), ios::out);
-			oss = &ofs;
+			oss = &ofs;		// archivo como salida
 		}
-		// Verificamos que el stream este OK.
+		// Verificamos que el archivo se halla abierto.
 		if (!oss->good()) {
 			cerr << "cannot open output file"
 			     << arg
@@ -79,11 +79,12 @@
 	}
 
 	static void opt_help(string const &arg){
+		// ayuda
 		cout << "tp0 -i [inputfile] -o [outputfile] -d [datafile](mandatory)" << endl;
 		exit(0);
 	}
 
-
+	// funcion readData que lee datos del archivo y los almacena en los objetos
 	void readData(istream& input, Array <Sensor> & sensores){
 		// variables utilizadas
 		string line,token;
@@ -99,21 +100,20 @@
 		}
 		
 		// parseo del resto de las lineas (temperaturas)
-		while(getline(input,line)){
+		while(getline(input,line)){	//mientras hayan lineas
 			int count = 0;
 			lineStr.clear();
 			lineStr.str(line);
-			while(getline(lineStr,token,',')){
-				sensores[count]+atof(token.c_str());
+			while(getline(lineStr,token,',')){	// dato entre comas o /n
+				sensores[count] + atof(token.c_str()); // pusheo el dato
 				count++;
 			}
 		}
 	}
 
 	void querryData(istream& input, Array <Sensor> & sensores,ostream& output){
-		
+		//variables
 		string line,token;
-		
 		int pos;
 		size_t min,max;
 		char ch;
@@ -151,11 +151,13 @@
 			}else if(good){
 				sAux = token;
 				pos = sensores.linear_search(sAux);
+				//si no encuentra posicion
 				if(pos == -1){
 					output << "UNKNOWN ID" << endl;
 					continue;
 				}
 				sensores[pos].querry(output, min, max);
+			//si hay mal parseo
 			}else{
 				output << "BAD QUERRY" << endl;
 			}
@@ -173,7 +175,7 @@
 		// lectura de datos
 		readData(*idss,sensores);
 		
-		// imprimo sensores en pantalla
+		// imprimo sensores en pantalla -- debug -- 
 		// cout << endl << "--- Sensores ---" << endl;
 		// for(int i=0;i<sensores.size();i++){
 			// cout << sensores[i] << endl;

@@ -3,6 +3,10 @@
 //#include <cmath>
 //#include <cstring>
 #include <sensor.h>
+#include <data.h>
+
+#define DBL_MIN -1000000.0
+#define DBL_MAX 1000000.0
 //constructores
 Sensor::Sensor(){
 	ID = "Sensor";
@@ -19,7 +23,7 @@ Sensor::~Sensor(){
 }
 
 //obtener un valor de dataeratura
-double Sensor::getData(int pos){
+Data Sensor::getData(int pos){
 	return data[pos];
 }
 //obtener el nombre
@@ -39,6 +43,7 @@ void Sensor::clear(){
 void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	double avg = 0,min = 0,max = 0;
 	int count = 0;
+	bool hasData = false;
 	if(minRange > maxRange){
 		output << "BAD QUERRY" << endl;
 		return;
@@ -50,23 +55,30 @@ void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	if(maxRange > data.size()-1){
 		maxRange = data.size();
 	}
-	min = max = data[minRange]; //inicializo los min y max
+	min = DBL_MAX;
+	max = DBL_MIN;
 	for(size_t i = minRange; i<=maxRange-1;i++){
-		if(data[i] < min){
-			min = data[i];
-		}else{
-			if(data[i] > max){
-				max = data[i];
+		if(data[i].exist()){
+			hasData = true;
+			if(data[i].getData() < min){
+				min = data[i].getData();
 			}
+			if(data[i].getData() > max){
+				max = data[i].getData();
+			}
+			avg+=data[i].getData();
+			count++;
 		}
-		avg+=data[i];
-		count++;
+	}
+	if(!hasData){
+		output << "NO DATA" << endl;
+		return;
 	}
 	avg = avg/count;
 	output << avg << ',' << min << ',' << max << ',' << count << endl;
 }
 
-std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
+std::ostream& operator<<(std::ostream& os,const Sensor& sensor){
 
 	os << "Sensor ID: " << sensor.getID() << endl;
 	os << "Dato:" << endl;
@@ -75,8 +87,14 @@ std::ostream & operator<< (std::ostream& os,const Sensor& sensor){
 	return os;
 }
 
-Sensor& Sensor::operator+(const double value){
+Sensor& Sensor::operator+(const Data& value){
 	data.push_back(value);
+	return *this;
+}
+Sensor& Sensor::operator+(const double& value){
+	Data d;
+	d = value;
+	data.push_back(d);
 	return *this;
 }
 Sensor& Sensor::operator+(const Sensor& s){

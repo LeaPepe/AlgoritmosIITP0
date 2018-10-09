@@ -9,6 +9,7 @@
 	#include <array.h>
 	#include <sensor.h>
 	#include <main.h>
+	#include <data.h>
 
 	using namespace std;
 
@@ -94,7 +95,7 @@
 		// parseo de la primera linea (nombres)
 		getline(input,line);					//obtengo linea del input
 		lineStr.str(line);						// la streameo
-		while(getline(lineStr,token,',')){		//obtengo los valores separados por coma
+		while(getline(lineStr,token,',')){		//obtengo los valuees separados por coma
 			sensorAux = token;					//asigno el nombre al objeto sensor auxiliar
 			sensores.push_back(sensorAux);		//pusheo al array el nuevo objeto
 		}
@@ -105,7 +106,12 @@
 			lineStr.clear();
 			lineStr.str(line);
 			while(getline(lineStr,token,',')){	// dato entre comas o /n
-				sensores[count] + atof(token.c_str()); // pusheo el dato
+				if (!token.empty()){
+					sensores[count] + atof(token.c_str()); // pusheo el dato
+				}else{
+					Data d;
+					sensores[count] + d;
+				}
 				count++;
 			}
 		}
@@ -137,14 +143,16 @@
 			// si no hay nombre en la consulta, se hace un promedio de los sensores
 			if(good && token.empty()){		
 				for (size_t i = 0; i < sensores[0].size(); i++){
-					double valor=0;
+					Data value;
 					int count=0;
 					for(size_t j=0;j<sensores.size();j++){
-						valor += sensores[j].getData(i);
-						count++;
+						if(sensores[j].getData(i).exist()){
+							value = sensores[j].getData(i) + value;
+							count++;
+						}
 					}
-						valor = valor/count; 
-						sAux + valor;	
+						value = value/count; 
+						sAux + value;	
 				}
 				sAux.querry(output,min,max);
 			// si hay nombre en la consulta
@@ -176,10 +184,10 @@
 		readData(*idss,sensores);
 		
 		// imprimo sensores en pantalla -- debug -- 
-		// cout << endl << "--- Sensores ---" << endl;
-		// for(int i=0;i<sensores.size();i++){
-			// cout << sensores[i] << endl;
-		// }
+		cout << endl << "--- Sensores ---" << endl;
+		for(size_t i=0;i<sensores.size();i++){
+			cout << sensores[i] << endl;
+		}
 		
 		// querry
 		querryData(*iss,sensores,*oss);	

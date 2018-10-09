@@ -183,7 +183,7 @@ void Array<T>::resize(size_t new_size)
 }
 
 template <typename T> 
-void Array<T>::push_back(const T &value)
+void Array<T>::push_back(const T& value)
 {
 	if(allocSize == usedSize){
 		this->resize(allocSize*ARRAY_GROWTH_RATE);

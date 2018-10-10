@@ -1,5 +1,5 @@
 	#include <cstdlib>
-	#include <main.h>
+	#include <querygen.h>
 	#include <cmdline.h>
 	
 	using namespace std;

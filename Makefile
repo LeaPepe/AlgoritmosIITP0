@@ -3,7 +3,7 @@ CXXFLAGS = -I. $(CXXARGS)
 LDFLAGS  =
 CXX      = c++
 
-all: clean main datagen querygen
+all: clean datagen querygen main 
 	@/bin/true
 
 main: main.o sensor.o cmdline.o data.o
@@ -22,16 +22,16 @@ data.o: data.cc data.h
 	$(CXX) $(CXXFLAGS) -c data.cc
 	
 datagen: datagen.o cmdline.o
-	$(CXX) $(LDFLAGS) -o datagen.o cmdline.o
+	$(CXX) $(LDFLAGS) -o datagen datagen.o cmdline.o
 
 datagen.o: datagen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c datagen.cc
 	
 querygen: querygen.o cmdline.o
-	$(CXX) $(LDFLAGS) -o querygen.o cmdline.o
+	$(CXX) $(LDFLAGS) -o datagen querygen.o cmdline.o
 
 querygen.o: querygen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c querygen.cc
 	
 clean:
-	rm -f *.o *.t core test?
+	rm -f *.o *.t datagen querygen tp0

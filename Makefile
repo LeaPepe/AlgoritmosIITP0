@@ -28,7 +28,7 @@ datagen.o: datagen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c datagen.cc
 	
 querygen: querygen.o cmdline.o
-	$(CXX) $(LDFLAGS) -o datagen querygen.o cmdline.o
+	$(CXX) $(LDFLAGS) -o querygen querygen.o cmdline.o
 
 querygen.o: querygen.h cmdline.h
 	$(CXX) $(CXXFLAGS) -c querygen.cc

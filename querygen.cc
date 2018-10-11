@@ -137,7 +137,7 @@
 		//hago los query
 		for(size_t i = 0;i<samples;i++){
 			if(rand() % 100 >= randNodata){
-				*oss << "sensor" << (rand() % number) << ',';
+				*oss << "Sensor" << (rand() % number) << ',';
 			}
 			size_t min = (rand() % maxRange);
 			*oss << min << ','; 

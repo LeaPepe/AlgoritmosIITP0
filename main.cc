@@ -184,10 +184,10 @@
 		readData(*idss,sensores);
 		
 		// imprimo sensores en pantalla -- debug -- 
-		cout << endl << "--- Sensores ---" << endl;
-		for(size_t i=0;i<sensores.size();i++){
-			cout << sensores[i] << endl;
-		}
+		// cout << endl << "--- Sensores ---" << endl;
+		// for(size_t i=0;i<sensores.size();i++){
+			// cout << sensores[i] << endl;
+		// }
 		
 		// querry
 		querryData(*iss,sensores,*oss);	

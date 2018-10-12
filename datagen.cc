@@ -13,8 +13,8 @@
 	static size_t number = 0;
 	static size_t samples = 0;
 	static int randNodata = 0;
-	static double minRange = 0;
-	static double maxRange = 0;
+	static int minRange = 0;
+	static int maxRange = 0;
 	static ostream *oss = NULL;		// Output Stream
 	static fstream ofs;				// Output File Stream
 
@@ -154,13 +154,13 @@
 			for(size_t i=0;i<number;i++){
 				if(i == 0){
 					if((rand() % 100) >= randNodata){
-						*oss << minRange + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxRange-minRange)));
+						*oss << minRange + static_cast <int> (rand()) /( static_cast <int> (RAND_MAX/(maxRange-minRange)));
 					}else{
 					
 					}
 				}else{
 					if((rand() % 100) >= randNodata){
-						*oss << ',' << minRange + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(maxRange-minRange)));
+						*oss << ',' << minRange + static_cast <int> (rand()) /( static_cast <int> (RAND_MAX/(maxRange-minRange)));
 					}else{
 						*oss << ',';
 					}

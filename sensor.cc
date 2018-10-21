@@ -57,6 +57,10 @@ void Sensor::querry(ostream& output,size_t minRange,size_t maxRange){
 	}
 	min = DBL_MAX;
 	max = DBL_MIN;
+	if(maxRange == 0){
+		output << "BAD QUERY" << endl;
+		return;
+	}
 	for(size_t i = minRange; i<=maxRange-1;i++){
 		if(data[i].exist()){
 			hasData = true;

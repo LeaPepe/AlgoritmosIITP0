@@ -179,12 +179,10 @@ int main(int argc, char * const argv[]){
 	
 	// lectura de datos
 	tstart = clock();
-	
 	readData(*idss,sensores);
-	
 	tend = clock();
 	telapsed =(tend-tstart);
-	cout << tstart << ',' << tend << endl;
+	cout << telapsed << endl;
 	
 	// imprimo sensores en pantalla -- debug -- 
 	// cout << endl << "--- Sensores ---" << endl;
@@ -193,9 +191,11 @@ int main(int argc, char * const argv[]){
 	// }
 	
 	// querry
-	//t = clock();
-
+	tstart = clock();
 	querryData(*iss,sensores,*oss);	
+	tend = clock();
+	telapsed =(tend-tstart);
+	cout << telapsed << endl;
 	
 	return 0;
 }
